@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flower Cards - Atomic Design</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- DaisyUI CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+
+  <!-- Handlebars CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- ✅ Minimal Navbar -->
+  <div class="navbar bg-base-100 shadow-md px-6">
+    <div class="flex-1">
+      <a class="text-xl font-bold">Flower Showcase</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-1">
+        <li><a>Home</a></li>
+        <li><a>About</a></li>
+        <li><a>Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="p-10">
+
+    <div id="card-container" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+  </div>
+
+  <!-- Handlebars Template -->
+  <script id="card-template" type="text/x-handlebars-template">
+
+    <!-- ORGANISM: Full Card -->
+    <div class="card bg-base-100 shadow-xl">
+
+      <!-- ATOM: Image -->
+      <figure class="flex justify-center p-2">
+        <img src="{{image}}" alt="{{name}}"
+             class="w-[250px] h-[200px] object-cover rounded-md mx-auto">
+      </figure>
+
+      <!-- MOLECULE: Card Body -->
+      <div class="card-body">
+        <h2 class="card-title">{{name}}</h2>
+
+        <!-- ATOM: Text -->
+        <p>{{description}}</p>
+
+        <!-- MOLECULE: Buttons -->
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary">View</button>
+          <button class="btn btn-secondary">Buy</button>
+        </div>
+      </div>
+    </div>
+
+  </script>
+
+  <script>
+    // Multiple Flower Cards Data
+    const flowers = [
+      {
+        name: "Rose",
+        description: "A symbol of love and beauty. Available in multiple colors.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSqkNat9mYXdSp2Mfe3szLntu_gpklFY25aA&s"
+      },
+      {
+        name: "Sunflower",
+        description: "Bright, cheerful flowers that follow the sun.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhCxZCc6GIn-pd66ySszpJ9dotjTaw3Fkd9w&s"
+      },
+      {
+        name: "Lotus",
+        description: "A sacred flower symbolizing purity and peace.",
+        image: "https://img.freepik.com/free-photo/beautiful-pink-lotus-flower-water-lily-pond-with-sunlight-background_640221-46.jpg?semt=ais_incoming&w=740&q=80"
+      },
+      {
+        name: "Tulip",
+        description: "Elegant flowers that bloom in vibrant colors.",
+        image: "https://images.pexels.com/photos/36729/tulip-flower-bloom-pink.jpg?cs=srgb&dl=pexels-pixabay-36729.jpg&fm=jpg"
+      }
+    ];
+
+    // Compile template
+    const template = Handlebars.compile(document.getElementById("card-template").innerHTML);
+
+    // Render all cards
+    document.getElementById("card-container").innerHTML = flowers
+      .map(flower => template(flower))
+      .join("");
+  </script>
+
+</body>
+</html>
